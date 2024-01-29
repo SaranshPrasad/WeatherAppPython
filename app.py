@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import datetime
 import requests
+import os
 
 day = datetime.datetime.now().strftime("%A")
 date = datetime.datetime.now().strftime("%d")
@@ -18,7 +19,7 @@ def home():
     global day, date, month
     if request.method == "POST":
         query = request.form.get("city_name").capitalize()
-        apiKey = "65723339ad21eb46a9128715d989e842"
+        apiKey = os.environ.get("API_KEY")
         unit = "metric"
         url = f"https://api.openweathermap.org/data/2.5/weather?q={query}&appid={apiKey}&units={unit}"
         response = requests.get(url).json()
